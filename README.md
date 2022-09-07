@@ -4,4 +4,4 @@
 
 # name course - JavaScript Fighting Game Tutorial with HTML Canvas
 
-# D:\Programming Language\JavaScript\Blackjack Game
+# D:\Programming Language\JavaScript\JavaScript Fighting Game
