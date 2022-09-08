@@ -9,16 +9,30 @@ c.fillRect(0, 0, canvas.width, canvas.height)
 const gravity = 0.7
 
 class Sprite {
-    constructor({ position, velocity }) {
+    constructor({ position, velocity, color = 'red' }) {
         this.position = position
         this.velocity = velocity
+        this.width = 50
         this.height = 150
         this.lastkey
+        this.attackBox = {
+            position: this.position,
+            width: 100,
+            height: 50
+        }
+        this.color = color
     }
 
     draw() {
-        c.fillStyle= "red"
-      c.fillRect(this.position.x, this.position.y, 50, this.height)
+        c.fillStyle= this.color
+      c.fillRect(this.position.x, this.position.y, this.width, this.height)
+
+      // attack box
+      c.fillStyle = 'green'
+      c.fillRect(this.attackBox.position.x, 
+        this.attackBox.position.y, 
+        this.attackBox.width, 
+        this.attackBox.height)
     }
 
     update() {
@@ -33,6 +47,8 @@ class Sprite {
     }
 }
 
+//player.draw()
+
 const player = new Sprite({
     position: {
     x: 0,
@@ -44,7 +60,7 @@ const player = new Sprite({
     }
 })
 
-//player.draw()
+//enemy.draw()
 
 const enemy = new Sprite({
     position: {
@@ -54,11 +70,9 @@ const enemy = new Sprite({
     velocity: {
         x: 0,
         y: 0
-    }
+    },
+    color: 'blue'
 })
-
-
-//enemy.draw()
 
 console.log(player)
 
@@ -102,6 +116,11 @@ function animate() {
         enemy.velocity.x = -5
     } else if (keys.ArrowRight.pressed && enemy.lastkey === 'ArrowRight') {
         enemy.velocity.x = 5
+    }
+
+    // detect for collision
+    if (player.attackBox.position.x + player.attackBox.width >= enemy.position.x && player.attackBox.position.x <= enemy.position.x + enemy.width && player.attackBox.position.y + player.attackBox.height >= enemy.position.y && player.attackBox.position.y <= enemy.position.y + enemy.height) {
+        console.log('go');
     }
 }
 
